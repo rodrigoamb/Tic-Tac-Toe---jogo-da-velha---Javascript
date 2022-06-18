@@ -1,4 +1,4 @@
-/* GLOBALS VARIABLES */
+/* GLOBALS VARIABLES E FUNCTIONS */
 
 let btnStart = document.querySelector(".button")
 
@@ -17,26 +17,26 @@ let sq7 = square[6]
 let sq8 = square[7]
 let sq9 = square[8]
 
-playerCurrent = ''
+let playerCurrent = ''
 
-const changeClassBtnStart = function (){
+const changeClassBtnStart = function() {
     btnStart.className = 'btnReset'
     btnStart.innerHTML = 'reset'
 }
 
-const removeBlur = function () {
+const removeBlur = function() {
     containerSquares.style.filter = 'none'
 }
 
-const changeMsgInstruction = function () {
+const changeMsgInstruction = function() {
     instruction.innerHTML = 'Good luck Players!'
 }
 
-const changeMsg = function () {
+const changeMsg = function() {
     msg.innerHTML = 'Turn player 01 (X)'
 }
 
-const changeClassSquares = function () {
+const changeClassSquares = function() {
 
     for (let i = 0; i < square.length; i++) {
     
@@ -47,7 +47,7 @@ const changeClassSquares = function () {
     }
 }
 
-let initReset = function () {
+let initReset = function() {
             
     document.location.reload() 
 
@@ -55,7 +55,7 @@ let initReset = function () {
 
 const changeMsgTurn = function() {
 
-    if(playerCurrent == 'playerX'){
+    if(playerCurrent == 'playerX') {
 
         msg.innerHTML = 'Turn player 02 (O)' 
 
@@ -67,7 +67,7 @@ const changeMsgTurn = function() {
 
 const changeCurrentPlayer = function() {
 
-    if (playerCurrent == 'playerX'){
+    if (playerCurrent == 'playerX') {
 
         playerCurrent = 'playerO'
 
@@ -107,29 +107,29 @@ let initGame = function() {
     
     /* RESET WORKING */
 
-    if (btnStart.innerHTML == 'reset'){
+    if (btnStart.innerHTML == 'reset') {
 
         btnStart.addEventListener('click', initReset)
     }
 
     /* LOGIC GAME */
 
-    for (let i=0 ; i <= square.length ; i++){
+    for (let i=0 ; i <= square.length ; i++) {
 
         let unitBox = square[i]
 
         let clickSquare = function() {
 
-            if (playerCurrent == 'playerX'){
+            if (playerCurrent == 'playerX') {
 
-                if (unitBox.innerHTML == ''){
+                if (unitBox.innerHTML == '') {
 
                     unitBox.innerHTML = 'X'
                     unitBox.className = 'squareX'
 
                     /* WINNING CONDITIONS PLAYER X */
 
-                    if (sq1.innerHTML == 'X' && sq2.innerHTML == 'X' && sq3.innerHTML == 'X'){
+                    if (sq1.innerHTML == 'X' && sq2.innerHTML == 'X' && sq3.innerHTML == 'X') {
                         msg.innerHTML = 'Player 01 (X): WIN!'
                         sq1.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
                         sq2.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
@@ -180,7 +180,7 @@ let initGame = function() {
 
                         /* DRAW CONDITION */
                     
-                    } else if (checkDraw()){
+                    } else if (checkDraw()) {
 
                         msg.innerHTML = 'DRAW! Reset the game.'
                         playerCurrent = ''
@@ -193,12 +193,12 @@ let initGame = function() {
                         changeCurrentPlayer()
                     } 
                                         
-                } else{
+                } else {
 
                     msg.innerHTML = 'Player 01 (X): Select the empty square'
                 }
                 
-            } else if (playerCurrent == 'playerO'){
+            } else if (playerCurrent == 'playerO') {
 
                 if (unitBox.innerHTML == ''){
                     unitBox.innerHTML = 'O'
@@ -206,7 +206,7 @@ let initGame = function() {
 
                     /* WINNING CONDITIONS PLAYER O */
                     
-                    if (sq1.innerHTML == 'O' && sq2.innerHTML == 'O' && sq3.innerHTML == 'O'){
+                    if (sq1.innerHTML == 'O' && sq2.innerHTML == 'O' && sq3.innerHTML == 'O') {
                         msg.innerHTML = 'Player 02 (O): WIN!'
                         sq1.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
                         sq2.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
@@ -267,9 +267,6 @@ let initGame = function() {
                     
                     msg.innerHTML = 'Player 02 (O): Select the empty square'
                 } 
-
-            } else{
-
             }
         }
 
