@@ -1,6 +1,6 @@
 /* GLOBALS VARIABLES and FUNCTIONS*/
-let playerCurrent = ''
 
+let playerCurrent = ''
 let btnStart = document.querySelector(".button")
 let squareContainer = document.querySelector('.square-container')
 let squaresList = document.querySelectorAll('.square-no-hover')
@@ -55,11 +55,11 @@ const checkDraw = () => {
 
         const box = squaresList[i];
 
-        if(box.innerHTML !== ''){
+        if(box.innerHTML !== '') {
             counter++
         }
 
-        if (counter === squaresList.length){
+        if (counter === squaresList.length) {
             isDraw = true
         }
     } 
@@ -82,7 +82,6 @@ const changeTurn = () => {
 btnStart.addEventListener('click', () => {
 
     playerCurrent = 'playerX'
-    
     btnStart.className = 'btnReset'
     btnStart.innerHTML = 'reset'
     squareContainer.style.filter = 'none'
