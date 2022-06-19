@@ -39,9 +39,9 @@ const checkWinner = (symbol) => {
     } else if (sq1.innerHTML == symbol && sq5.innerHTML == symbol && sq9.innerHTML == symbol) {
         isWinner = true
         addAnimation(sq1,sq5,sq9, 'myAnim')
-    } else if (sq7.innerHTML == symbol && sq8.innerHTML == symbol && sq9.innerHTML == symbol) {
+    } else if (sq3.innerHTML == symbol && sq5.innerHTML == symbol && sq7.innerHTML == symbol) {
         isWinner = true
-        addAnimation(sq7,sq8,sq9, 'myAnim')
+        addAnimation(sq3,sq5,sq7, 'myAnim')
     }
     return isWinner
 }
