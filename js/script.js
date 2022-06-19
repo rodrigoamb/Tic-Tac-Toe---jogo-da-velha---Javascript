@@ -1,314 +1,159 @@
-/* GLOBALS VARIABLES */
+/* GLOBALS VARIABLES and FUNCTIONS*/
+let playerCurrent = ''
 
 let btnStart = document.querySelector(".button")
-
-let containerSquares = document.querySelector('.square-container')
-let square = document.querySelectorAll('.square-no-hover')
-let msg = document.querySelector('.msg')
+let squareContainer = document.querySelector('.square-container')
+let squaresList = document.querySelectorAll('.square-no-hover')
+let messageSpace = document.querySelector('.message')
 let instruction = document.querySelector('.instruction')
+let [sq1,sq2,sq3,sq4,sq5,sq6,sq7,sq8,sq9] = squaresList
 
-let sq1 = square[0]
-let sq2 = square[1]
-let sq3 = square[2]
-let sq4 = square[3]
-let sq5 = square[4]
-let sq6 = square[5]
-let sq7 = square[6]
-let sq8 = square[7]
-let sq9 = square[8]
-
-playerCurrent = ''
-
-const changeClassBtnStart = function (){
-    btnStart.className = 'btnReset'
-    btnStart.innerHTML = 'reset'
-}
-
-const removeBlur = function () {
-    containerSquares.style.filter = 'none'
-}
-
-const changeMsgInstruction = function () {
-    instruction.innerHTML = 'Good luck Players!'
-}
-
-const changeMsg = function () {
-    msg.innerHTML = 'Turn player 01 (X)'
-}
-
-const changeClassSquares = function () {
-
-    for (let i = 0; i < square.length; i++) {
+const checkWinner = (symbol) => {
     
-        if (square[i].className = 'square-no-hover'){
+    isWinner = false
+    const addAnimation = (var1, var2, var3, classWin) => {
 
-            square[i].className = 'square'
+        var1.style.animation = `${classWin} 1s ease 0s infinite normal forwards`
+        var2.style.animation = `${classWin} 1s ease 0s infinite normal forwards`
+        var3.style.animation = `${classWin} 1s ease 0s infinite normal forwards`
+    }
+
+    if(sq1.innerHTML == symbol && sq2.innerHTML == symbol && sq3.innerHTML == symbol) {
+        isWinner = true 
+        addAnimation(sq1,sq2,sq3, 'myAnim')
+    } else if (sq4.innerHTML == symbol && sq5.innerHTML == symbol && sq6.innerHTML == symbol) {
+        isWinner = true
+        addAnimation(sq4,sq5,sq6, 'myAnim')
+    } else if (sq7.innerHTML == symbol && sq8.innerHTML == symbol && sq9.innerHTML == symbol) {
+        isWinner = true
+        addAnimation(sq7,sq8,sq9, 'myAnim')
+    } else if (sq1.innerHTML == symbol && sq4.innerHTML == symbol && sq7.innerHTML == symbol) {
+        isWinner = true
+        addAnimation(sq1,sq4,sq7, 'myAnim')
+    } else if (sq2.innerHTML == symbol && sq5.innerHTML == symbol && sq8.innerHTML == symbol) {
+        isWinner = true
+        addAnimation(sq2,sq5,sq8, 'myAnim')
+    } else if (sq3.innerHTML == symbol && sq6.innerHTML == symbol && sq9.innerHTML == symbol) {
+        isWinner = true
+        addAnimation(sq3,sq6,sq9, 'myAnim')
+    } else if (sq1.innerHTML == symbol && sq5.innerHTML == symbol && sq9.innerHTML == symbol) {
+        isWinner = true
+        addAnimation(sq1,sq5,sq9, 'myAnim')
+    } else if (sq7.innerHTML == symbol && sq8.innerHTML == symbol && sq9.innerHTML == symbol) {
+        isWinner = true
+        addAnimation(sq7,sq8,sq9, 'myAnim')
+    }
+    return isWinner
+}
+
+const checkDraw = () => {
+    
+    let isDraw = false
+    let counter = 0
+
+    for (let i = 0; i < squaresList.length; i++) {
+
+        const box = squaresList[i];
+
+        if(box.innerHTML !== ''){
+            counter++
         }
-    }
-}
 
-let initReset = function () {
-            
-    document.location.reload() 
-
-}
-
-const changeMsgTurn = function() {
-
-    if(playerCurrent == 'playerX'){
-
-        msg.innerHTML = 'Turn player 02 (O)' 
-
-    } else {
-
-        msg.innerHTML = 'Turn player 01 (X)' 
-    }
-}
-
-const changeCurrentPlayer = function() {
-
-    if (playerCurrent == 'playerX'){
-
-        playerCurrent = 'playerO'
-
-    } else {
-
-        playerCurrent = 'playerX'
+        if (counter === squaresList.length){
+            isDraw = true
+        }
     } 
+    return isDraw
 }
 
-const checkDraw = function() {
+const changeTurn = () => {
     
-    if (sq1.innerHTML.length == 1 && 
-        sq2.innerHTML.length == 1 && 
-        sq3.innerHTML.length == 1 && 
-        sq4.innerHTML.length == 1 && 
-        sq5.innerHTML.length == 1 &&
-        sq6.innerHTML.length == 1 && 
-        sq7.innerHTML.length == 1 && 
-        sq8.innerHTML.length == 1 && 
-        sq9.innerHTML.length == 1) {
-        return true
+    if (playerCurrent == 'playerX') {
+        playerCurrent = 'playerO'
+        messageSpace.innerHTML = 'Turn player 02 (O)'
+    } else {
+        playerCurrent = 'playerX'
+        messageSpace.innerHTML = 'Turn player 01 (X)'
     }
-    
 }
 
-let initGame = function() {
+/* code pre-game */
 
-    /* START THE GAME */
+btnStart.addEventListener('click', () => {
 
     playerCurrent = 'playerX'
-
-    changeClassBtnStart()
-    removeBlur()
-    changeMsgInstruction()
-    changeMsg() 
-    changeClassSquares()
     
-    /* RESET WORKING */
-
-    if (btnStart.innerHTML == 'reset'){
-
-        btnStart.addEventListener('click', initReset)
+    btnStart.className = 'btnReset'
+    btnStart.innerHTML = 'reset'
+    squareContainer.style.filter = 'none'
+    instruction.innerHTML = 'Good luck Players!'
+    messageSpace.innerHTML = 'Turn Player 01 (X)'
+    
+    const changeCLassSquare = () => {
+        for (let i = 0; i < squaresList.length; i++) {
+            squaresList[i].className = 'square'
+        }
     }
 
-    /* LOGIC GAME */
+    changeCLassSquare()
 
-    for (let i=0 ; i <= square.length ; i++){
+    /* add function button restart */
 
-        let unitBox = square[i]
+    btnStart.addEventListener('click', () => {
+        document.location.reload()
+    })
+})
 
-        let clickSquare = function() {
+/* code play game */
 
-            if (playerCurrent == 'playerX'){
+for (let i = 0; i < squaresList.length; i++) {
 
-                if (unitBox.innerHTML == ''){
+    const box = squaresList[i];
+    
+    box.addEventListener('click', () => {
+        
+        switch (playerCurrent) {
 
-                    unitBox.innerHTML = 'X'
-                    unitBox.className = 'squareX'
+            case 'playerX':
 
-                    /* WINNING CONDITIONS PLAYER X */
+                if(box.innerHTML == '') {
 
-                    if (sq1.innerHTML == 'X' && sq2.innerHTML == 'X' && sq3.innerHTML == 'X'){
-                        msg.innerHTML = 'Player 01 (X): WIN!'
-                        sq1.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
-                        sq2.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
-                        sq3.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
+                    box.innerHTML = 'X'
+                    box.className = 'squareX'
+
+                    if(checkWinner('X')) {
+                        messageSpace.innerHTML = 'Player 01 (X): WIN!!!'
                         playerCurrent = ''
-                    } else if (sq4.innerHTML == 'X' && sq5.innerHTML == 'X' && sq6.innerHTML == 'X') {
-                        msg.innerHTML = 'Player 01 (X): WIN!'
-                        sq4.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
-                        sq5.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
-                        sq6.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
+                    } else if (checkDraw()) {
+                        messageSpace.innerHTML = 'DRAW! Reset the game.'
                         playerCurrent = ''
-                    } else if (sq7.innerHTML == 'X' && sq8.innerHTML == 'X' && sq9.innerHTML == 'X') {
-                        msg.innerHTML = 'Player 01 (X): WIN!'
-                        sq7.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
-                        sq8.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
-                        sq9.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
-                        playerCurrent = ''
-                    } else if (sq1.innerHTML == 'X' && sq4.innerHTML == 'X' && sq7.innerHTML == 'X') {
-                        msg.innerHTML = 'Player 01 (X): WIN!'
-                        sq1.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
-                        sq4.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
-                        sq7.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
-                        playerCurrent = ''
-                    } else if (sq2.innerHTML == 'X' && sq5.innerHTML == 'X' && sq8.innerHTML == 'X') {
-                        msg.innerHTML = 'Player 01 (X): WIN!'
-                        sq2.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
-                        sq5.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
-                        sq8.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
-                        playerCurrent = ''
-                    } else if (sq3.innerHTML == 'X' && sq6.innerHTML == 'X' && sq9.innerHTML == 'X') {
-                        msg.innerHTML = 'Player 01 (X): WIN!'
-                        sq3.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
-                        sq6.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
-                        sq9.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
-                        playerCurrent = ''
-                    } else if (sq1.innerHTML == 'X' && sq5.innerHTML == 'X' && sq9.innerHTML == 'X') {
-                        msg.innerHTML = 'Player 01 (X): WIN!'
-                        sq1.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
-                        sq5.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
-                        sq9.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
-                        playerCurrent = ''
-                    } else if (sq3.innerHTML == 'X' && sq5.innerHTML == 'X' && sq7.innerHTML == 'X') {
-                        msg.innerHTML = 'Player 01 (X): WIN!'
-                        sq3.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
-                        sq5.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
-                        sq7.style.animation = 'winAnimation 0.8s ease 0s infinite normal forwards'
-                        playerCurrent = ''
-
-                        /* DRAW CONDITION */
-                    
-                    } else if (checkDraw()){
-
-                        msg.innerHTML = 'DRAW! Reset the game.'
-                        playerCurrent = ''
-
-                        /* NEXT TURN */
-
-                    } else {           
-
-                        changeMsgTurn()
-                        changeCurrentPlayer()
-                    } 
-                                        
-                } else{
-
-                    msg.innerHTML = 'Player 01 (X): Select the empty square'
-                }
-                
-            } else if (playerCurrent == 'playerO'){
-
-                if (unitBox.innerHTML == ''){
-                    unitBox.innerHTML = 'O'
-                    unitBox.className = 'squareO'
-
-                    /* WINNING CONDITIONS PLAYER O */
-                    
-                    if (sq1.innerHTML == 'O' && sq2.innerHTML == 'O' && sq3.innerHTML == 'O'){
-                        msg.innerHTML = 'Player 02 (O): WIN!'
-                        sq1.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        sq2.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        sq3.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        playerCurrent = ''
-                    } else if (sq4.innerHTML == 'O' && sq5.innerHTML == 'O' && sq6.innerHTML == 'O') {
-                        msg.innerHTML = 'Player 02 (O): WIN!'
-                        sq4.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        sq5.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        sq6.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        playerCurrent = ''
-                    } else if (sq7.innerHTML == 'O' && sq8.innerHTML == 'O' && sq9.innerHTML == 'O') {
-                        msg.innerHTML = 'Player 02 (O): WIN!'
-                        sq7.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        sq8.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        sq9.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        playerCurrent = ''
-                    } else if (sq1.innerHTML == 'O' && sq4.innerHTML == 'O' && sq7.innerHTML == 'O') {
-                        msg.innerHTML = 'Player 02 (O): WIN!'
-                        sq1.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        sq4.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        sq7.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        playerCurrent = ''
-                    } else if (sq2.innerHTML == 'O' && sq5.innerHTML == 'O' && sq8.innerHTML == 'O') {
-                        msg.innerHTML = 'Player 02 (O): WIN!'
-                        sq2.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        sq5.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        sq8.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        playerCurrent = ''
-                    } else if (sq3.innerHTML == 'O' && sq6.innerHTML == 'O' && sq9.innerHTML == 'O') {
-                        msg.innerHTML = 'Player 02 (O): WIN!'
-                        sq3.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        sq6.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        sq9.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        playerCurrent = ''
-                    } else if (sq1.innerHTML == 'O' && sq5.innerHTML == 'O' && sq9.innerHTML == 'O') {
-                        msg.innerHTML = 'Player 02 (O): WIN!'
-                        sq1.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        sq5.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        sq9.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        playerCurrent = ''
-                    } else if (sq3.innerHTML == 'O' && sq5.innerHTML == 'O' && sq7.innerHTML == 'O') {
-                        msg.innerHTML = 'Player 02 (O): WIN!'
-                        sq3.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        sq5.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        sq7.style.animation = 'winAnimation2 0.8s ease 0s infinite normal forwards'
-                        playerCurrent = ''
-
-                        /* NEXT TURN */
-
                     } else {
-                        
-                        changeMsgTurn()
-                        changeCurrentPlayer()
+                        changeTurn()
                     }
 
                 } else {
-                    
-                    msg.innerHTML = 'Player 02 (O): Select the empty square'
-                } 
+                    messageSpace.innerHTML = 'Player 01 (X): Select the empty square.'
+                }
+                break
 
-            } else{
+            case 'playerO':
 
-            }
+                if(box.innerHTML == '') {
+
+                    box.innerHTML = 'O'
+                    box.className = 'squareO'
+
+                    if(checkWinner('O')) {
+                        messageSpace.innerHTML = 'Player 02 (O): WIN!!!'
+                        playerCurrent = ''
+                    } else {
+                        changeTurn()
+                    }
+
+                } else {
+                    messageSpace.innerHTML = 'Player 02 (O): Select the empty square.'
+                }
+                break
         }
-
-        unitBox.addEventListener('click', clickSquare);
-    }
+    })
 }
-
-btnStart.addEventListener('click', initGame)
-
-
-
-
-    
-
-        
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

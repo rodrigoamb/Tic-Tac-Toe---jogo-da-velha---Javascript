@@ -54,6 +54,22 @@ body{
     filter: blur(5px); 
 }
 
+.square-container div:nth-child(1){
+    border-radius: 50px 0 0 0;
+}
+
+.square-container div:nth-child(3){
+    border-radius: 0 50px 0 0;
+}
+
+.square-container div:nth-child(7){
+    border-radius: 0 0 0 50px;
+}
+
+.square-container div:nth-child(9){
+    border-radius: 0 0 50px 0;
+}
+
 .square-no-hover{
     background-color: #067be9;
     width: 100px;
@@ -64,7 +80,7 @@ body{
 }
 
 .square{
-    background-color: #067be9;
+    background-color: #0084ff;
     width: 100px;
     height: 100px;
     margin: auto;
@@ -73,28 +89,12 @@ body{
 }
 
 .square:hover{
-    background-color: #032d53;
+    background-color: #b3dcff;
     cursor: pointer;
-    transform: scale(1.02);
+    transform: scale(1.1);
 }
 
-#Q1{
-    border-radius: 50px 0 0 0;
-}
-
-#Q3{
-    border-radius: 0 50px 0 0;
-}
-
-#Q7{
-    border-radius: 0 0 0 50px;
-}
-
-#Q9{
-    border-radius: 0 0 50px 0;
-}
-
-.msg{
+.message{
 
     color: #00ff9d;
     font-size: 1.8rem;
@@ -191,30 +191,16 @@ body{
     animation: none;
 }
 
-@keyframes winAnimation {
+@keyframes myAnim {
 	0% {
-		background-color: #00ff9d ;
+		opacity: 0 ;
 	}
 
 	50% {
-		background-color: #2b654f ;
+		opacity: 1 ;
 	}
 
 	100% {
-		background-color: #00ff9d;
-	}
-}
-
-@keyframes winAnimation2 {
-	0% {
-		background-color: #b566e0;
-	}
-
-	50% {
-		background-color: #541a71;
-	}
-
-	100% {
-		background-color: #b566e0;
+		opacity: 0 ;
 	}
 }
